@@ -37,7 +37,7 @@ public class CertainMovieHandler extends BaseHttpHandler {
             } else {
                 throw new NotSupportedErrorResponse(new String[] {METHOD_NOT_SUPPORTED});
             }
-        } catch (NotFoundErrorResponse e) {;
+        } catch (NotFoundErrorResponse e) {
             sendJson(ex, 404, gson.toJson(e.getMessage()));
         } catch (ValidationErrorResponse e) {
             sendJson(ex, 400, gson.toJson(e.getMessage()));
