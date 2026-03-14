@@ -29,7 +29,7 @@ public class Movie {
     public boolean isTitleShort() {
         boolean isShort = false;
 
-        if (this.title.length() <= 100 ) {
+        if (this.title.length() <= 100) {
             isShort = true;
         }
         return isShort;
