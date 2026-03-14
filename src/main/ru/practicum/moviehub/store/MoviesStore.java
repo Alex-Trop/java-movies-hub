@@ -90,7 +90,9 @@ public class MoviesStore {
 
     private boolean containsMovie(Movie movie) {
         for (Movie film : moviesStore.values()) {
-            if (film.equals(movie)) { return true; }
+            if (film.equals(movie)) {
+                return true;
+            }
         }
         return false;
     }
