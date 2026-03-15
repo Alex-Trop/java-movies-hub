@@ -9,13 +9,12 @@ import ru.practicum.moviehub.store.MoviesStore;
 
 import java.io.IOException;
 
-import static ru.practicum.moviehub.api.ErrorDetails.INVALID_ID;
-import static ru.practicum.moviehub.api.ErrorDetails.METHOD_NOT_SUPPORTED;
+import static ru.practicum.moviehub.api.ErrorDetails.*;
 
 public class CertainMovieHandler extends BaseHttpHandler {
     //для эндпойнтов GET /movies/{id} и DELETE /movies/{id}
-    Gson gson = new Gson();
-    MoviesStore moviesStore = new MoviesStore();
+    private Gson gson = new Gson();
+    private MoviesStore moviesStore = new MoviesStore();
 
 
     @Override
@@ -38,11 +37,16 @@ public class CertainMovieHandler extends BaseHttpHandler {
                 throw new NotSupportedErrorResponse(new String[] {METHOD_NOT_SUPPORTED});
             }
         } catch (NotFoundErrorResponse e) {
-            sendJson(ex, 404, gson.toJson(e.getMessage()));
+            //sendJson(ex, 404, gson.toJson(e.getMessage()));
+            sendError(ex, 404, e.getMessage());
         } catch (ValidationErrorResponse e) {
-            sendJson(ex, 400, gson.toJson(e.getMessage()));
+            //sendJson(ex, 400, gson.toJson(e.getMessage()));
+            sendError(ex, 400, e.getMessage());
         } catch (NotSupportedErrorResponse e) {
-            sendJson(ex, 405, gson.toJson(e.getMessage()));
+            //sendJson(ex, 405, gson.toJson(e.getMessage()));
+            sendError(ex, 405, e.getMessage());
+        } catch (Exception e) {
+            sendError(ex, 500, INTERNAL_ERROR);
         }
     }
 

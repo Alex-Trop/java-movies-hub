@@ -15,6 +15,7 @@ public class ErrorDetails {
     public static final String INVALID_PARAMETERS = "Некорректный запрос: переданы неверные параметры строки";
     public static final String INVALID_REQUEST_HEADER = "Запрошен неверный Content-Type";
     public static final String INVALID_JSON_OBJECT = "Переданы некорректные сведения о фильме";
+    public static final String INTERNAL_ERROR = "Неизвестная ошибка сервера, попробуйте еще раз";
 
 
 }

@@ -1,15 +1,12 @@
 package ru.practicum.moviehub.model;
 
-import ru.practicum.moviehub.store.MoviesStore;
-
 public class PostedMovie {
     //этот объект будет возвращать сервер
     private final int id;
     private final Movie movie;
-    private static final MoviesStore STORE = new MoviesStore();
 
-    public PostedMovie(Movie movie) {
-        this.id = STORE.getId(movie);
+    public PostedMovie(Movie movie, int id) {
+        this.id = id;
         this.movie = movie;
     }
 

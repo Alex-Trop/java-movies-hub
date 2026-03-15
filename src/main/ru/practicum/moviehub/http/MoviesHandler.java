@@ -19,8 +19,8 @@ public class MoviesHandler extends BaseHttpHandler {
     //для эндпойнтов GET /movies, GET /movies?year=YYYY и POST /movies
     private static final int QUERY_LENGTH = 9;
     private static final int FILTER_LENGTH = 5;
-    MoviesStore moviesStore = new MoviesStore();
-    Gson gson = new Gson();
+    private MoviesStore moviesStore = new MoviesStore();
+    private Gson gson = new Gson();
 
     @Override
     public void handle(HttpExchange ex) throws IOException {
@@ -57,26 +57,24 @@ public class MoviesHandler extends BaseHttpHandler {
                 MoviesStore moviesStore = new MoviesStore();
                 Movie movie = convertToMovie(ex);
 
-                moviesStore.postMovie(movie);
-
-                PostedMovie postedMovie = new PostedMovie(movie);
-
-                sendJson(ex, 201, gson.toJson(postedMovie));
+                sendJson(ex, 201, gson.toJson(moviesStore.postMovie(movie)));
             } else {
                 throw new NotSupportedErrorResponse(new String[]{METHOD_NOT_SUPPORTED});
             }
         } catch (ValidationErrorResponse e) {
             if (e.getMessage().contains(INVALID_YEAR_FORMAT)) {
-                sendJson(ex, 400, gson.toJson(e.getMessage()));
+                sendError(ex, 400, e.getMessage());
             } else {
-                sendJson(ex, 422, gson.toJson(e.getMessage()));
+                sendError(ex, 422, e.getMessage());
             }
         } catch (NotSupportedErrorResponse e) {
             if (e.getMessage().contains(INVALID_REQUEST_HEADER)) {
-                sendJson(ex, 415, gson.toJson(e.getMessage()));
+                sendError(ex, 415, e.getMessage());
             } else {
-                sendJson(ex, 405, gson.toJson(e.getMessage()));
+                sendError(ex, 405, e.getMessage());
             }
+        } catch (Exception e) {
+            sendError(ex, 500, INTERNAL_ERROR);
         }
     }
 

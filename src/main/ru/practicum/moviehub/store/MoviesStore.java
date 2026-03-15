@@ -3,6 +3,7 @@ package ru.practicum.moviehub.store;
 import ru.practicum.moviehub.api.NotFoundErrorResponse;
 import ru.practicum.moviehub.api.ValidationErrorResponse;
 import ru.practicum.moviehub.model.Movie;
+import ru.practicum.moviehub.model.PostedMovie;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,9 +18,13 @@ public class MoviesStore {
     private static HashMap<Integer, Movie> moviesStore = new HashMap<>();
     private static final int VOLUME = 1000000;
 
-    public void postMovie(Movie movie) throws ValidationErrorResponse {
+    public PostedMovie postMovie(Movie movie) throws ValidationErrorResponse {
         if (movie.isTitleShort() && !movie.isTitleEmpty() && movie.isYearCorrect() && !containsMovie(movie)) {
             moviesStore.put(generateId(), movie);
+
+            PostedMovie postedMovie = new PostedMovie(movie, getId(movie));
+
+            return postedMovie;
         } else if (containsMovie(movie)) {
             throw new ValidationErrorResponse(new String[] {DUPLICATES_MOVIE});
         } else {
