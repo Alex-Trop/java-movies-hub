@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import ru.practicum.moviehub.api.NotSupportedErrorResponse;
 import ru.practicum.moviehub.api.ValidationErrorResponse;
 import ru.practicum.moviehub.model.Movie;
-import ru.practicum.moviehub.model.PostedMovie;
 import ru.practicum.moviehub.store.MoviesStore;
 
 import java.io.IOException;
